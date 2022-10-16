@@ -1,9 +1,12 @@
 package com.atharianr.storyapp.di
 
+import com.atharianr.storyapp.data.source.remote.RemoteDataSource
 import com.atharianr.storyapp.data.source.remote.network.ApiService
+import com.atharianr.storyapp.ui.auth.AuthViewModel
 import com.atharianr.storyapp.utils.Constant.API_BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,6 +32,8 @@ val networkModule = module {
 }
 
 val remoteDataSourceModule = module {
+    factory { RemoteDataSource(get()) }
 }
 val viewModelModule = module {
+    viewModel { AuthViewModel(get()) }
 }

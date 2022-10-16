@@ -7,4 +7,9 @@
     <string name="asking_account">Belum punya akun? Daftar</string>
     <string name="asking_login">Sudah punya akun? Masuk</string>
     <string name="register">Daftar</string>
+    <string name="password_error_info">Kata sandi minimal 6 karakter</string>
+    <string name="email_error_info">Email tidak sesuai</string>
+    <string name="user_name">Nama Pengguna</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
 </resources>

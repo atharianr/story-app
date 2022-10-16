@@ -17,7 +17,7 @@
         android:textColor="@color/blue_2B95F6"
         android:textSize="20sp" />
 
-    <EditText
+    <com.atharianr.storyapp.customview.AutoCheckEditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
