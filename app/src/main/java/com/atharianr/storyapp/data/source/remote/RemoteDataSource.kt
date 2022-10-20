@@ -1,12 +1,11 @@
 package com.atharianr.storyapp.data.source.remote
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.atharianr.storyapp.data.source.remote.network.ApiService
 import com.atharianr.storyapp.data.source.remote.request.LoginRequest
 import com.atharianr.storyapp.data.source.remote.request.RegisterRequest
-import com.atharianr.storyapp.data.source.remote.response.BaseResponse
+import com.atharianr.storyapp.data.source.remote.response.AuthResponse
 import com.atharianr.storyapp.data.source.remote.response.vo.ApiResponse
 import org.json.JSONObject
 import retrofit2.Call
@@ -14,11 +13,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RemoteDataSource(private val apiService: ApiService) {
-    fun register(registerRequest: RegisterRequest): LiveData<ApiResponse<BaseResponse>> {
-        val resultResponse = MutableLiveData<ApiResponse<BaseResponse>>()
+    fun register(registerRequest: RegisterRequest): LiveData<ApiResponse<AuthResponse>> {
+        val resultResponse = MutableLiveData<ApiResponse<AuthResponse>>()
 
-        apiService.register(registerRequest).enqueue(object : Callback<BaseResponse> {
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+        apiService.register(registerRequest).enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                 if (response.isSuccessful) {
                     resultResponse.postValue(ApiResponse.success(response.body()))
                 } else {
@@ -34,7 +33,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
                 resultResponse.postValue(ApiResponse.error(t.message))
             }
         })
@@ -42,11 +41,11 @@ class RemoteDataSource(private val apiService: ApiService) {
         return resultResponse
     }
 
-    fun login(loginRequest: LoginRequest): LiveData<ApiResponse<BaseResponse>> {
-        val resultResponse = MutableLiveData<ApiResponse<BaseResponse>>()
+    fun login(loginRequest: LoginRequest): LiveData<ApiResponse<AuthResponse>> {
+        val resultResponse = MutableLiveData<ApiResponse<AuthResponse>>()
 
-        apiService.login(loginRequest).enqueue(object : Callback<BaseResponse> {
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+        apiService.login(loginRequest).enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                 if (response.isSuccessful) {
                     resultResponse.postValue(ApiResponse.success(response.body()))
                 } else {
@@ -62,7 +61,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
                 resultResponse.postValue(ApiResponse.error(t.message))
             }
         })

@@ -1,7 +1,7 @@
 package com.atharianr.storyapp.ui.auth.register
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,7 @@ import com.atharianr.storyapp.data.source.remote.request.RegisterRequest
 import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.ERROR
 import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.SUCCESS
 import com.atharianr.storyapp.databinding.FragmentRegisterBinding
+import com.atharianr.storyapp.ui.auth.AuthActivity
 import com.atharianr.storyapp.ui.auth.AuthViewModel
 import com.atharianr.storyapp.utils.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,6 +50,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun register() {
+        isLoading(true)
+
         with(binding) {
             val registerRequest = RegisterRequest(
                 etName.text.toString(),
@@ -59,13 +62,35 @@ class RegisterFragment : Fragment() {
             authViewModel.register(registerRequest).observe(viewLifecycleOwner) {
                 when (it.status) {
                     SUCCESS -> {
-                        Log.d("cobawow", it.toString())
-                        it.message?.let { msg -> toast(requireActivity(), msg) }
+                        it.body?.message?.let { msg -> toast(requireActivity(), msg) }
+                        intentToAuth()
                     }
                     ERROR -> {
                         it.message?.let { msg -> toast(requireActivity(), msg) }
                     }
                 }
+                isLoading(false)
+            }
+        }
+    }
+
+    private fun intentToAuth() {
+        with(Intent(requireActivity(), AuthActivity::class.java)) {
+            startActivity(this)
+            requireActivity().finish()
+        }
+    }
+
+    private fun isLoading(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                btnLogin.text = ""
+                btnLogin.isEnabled = false
+                progressBar.visibility = View.VISIBLE
+            } else {
+                btnLogin.text = getString(R.string.login)
+                btnLogin.isEnabled = true
+                progressBar.visibility = View.GONE
             }
         }
     }
