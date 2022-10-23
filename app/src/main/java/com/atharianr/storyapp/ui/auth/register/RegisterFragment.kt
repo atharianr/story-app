@@ -14,7 +14,9 @@ import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.SUCC
 import com.atharianr.storyapp.databinding.FragmentRegisterBinding
 import com.atharianr.storyapp.ui.auth.AuthActivity
 import com.atharianr.storyapp.ui.auth.AuthViewModel
+import com.atharianr.storyapp.utils.gone
 import com.atharianr.storyapp.utils.toast
+import com.atharianr.storyapp.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment : Fragment() {
@@ -54,9 +56,9 @@ class RegisterFragment : Fragment() {
 
         with(binding) {
             val registerRequest = RegisterRequest(
-                etName.text.toString(),
-                etEmail.text.toString(),
-                etPassword.text.toString()
+                edRegisterName.text.toString(),
+                edRegisterEmail.text.toString(),
+                edRegisterPassword.text.toString()
             )
 
             authViewModel.register(registerRequest).observe(viewLifecycleOwner) {
@@ -84,13 +86,13 @@ class RegisterFragment : Fragment() {
     private fun isLoading(loading: Boolean) {
         binding.apply {
             if (loading) {
-                btnLogin.text = ""
-                btnLogin.isEnabled = false
-                progressBar.visibility = View.VISIBLE
+                btnRegister.text = ""
+                btnRegister.isEnabled = false
+                progressBar.visible()
             } else {
-                btnLogin.text = getString(R.string.login)
-                btnLogin.isEnabled = true
-                progressBar.visibility = View.GONE
+                btnRegister.text = getString(R.string.register)
+                btnRegister.isEnabled = true
+                progressBar.gone()
             }
         }
     }

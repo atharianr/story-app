@@ -12,4 +12,13 @@
     <string name="user_name">Nama Pengguna</string>
     <string name="email">Email</string>
     <string name="password">Kata Sandi</string>
+    <string name="date">Tanggal</string>
+    <string name="description">Deskripsi</string>
+    <string name="greeting">Halo, &#160;</string>
+    <string name="story_detail">Detail Story</string>
+    <string name="add_story">Tambah Story</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description_hint">Masukkan deskripsi story</string>
+    <string name="upload">Unggah</string>
 </resources>

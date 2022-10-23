@@ -3,6 +3,7 @@ package com.atharianr.storyapp.di
 import com.atharianr.storyapp.data.source.remote.RemoteDataSource
 import com.atharianr.storyapp.data.source.remote.network.ApiService
 import com.atharianr.storyapp.ui.auth.AuthViewModel
+import com.atharianr.storyapp.ui.main.MainViewModel
 import com.atharianr.storyapp.utils.Constant.API_BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,4 +37,5 @@ val remoteDataSourceModule = module {
 }
 val viewModelModule = module {
     viewModel { AuthViewModel(get()) }
+    viewModel { MainViewModel(get()) }
 }

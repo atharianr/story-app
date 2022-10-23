@@ -1,6 +1,5 @@
 package com.atharianr.storyapp.ui.auth.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.atharianr.storyapp.MyApplication.Companion.prefs
 import com.atharianr.storyapp.R
 import com.atharianr.storyapp.data.source.remote.request.LoginRequest
 import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse
 import com.atharianr.storyapp.databinding.FragmentLoginBinding
-import com.atharianr.storyapp.ui.MainActivity
 import com.atharianr.storyapp.ui.auth.AuthViewModel
-import com.atharianr.storyapp.utils.Constant
+import com.atharianr.storyapp.ui.main.MainActivity
+import com.atharianr.storyapp.utils.Constant.USER_NAME
+import com.atharianr.storyapp.utils.Constant.USER_TOKEN
+import com.atharianr.storyapp.utils.PreferenceHelper.set
+import com.atharianr.storyapp.utils.gone
 import com.atharianr.storyapp.utils.toast
+import com.atharianr.storyapp.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
@@ -53,7 +57,7 @@ class LoginFragment : Fragment() {
 
         with(binding) {
             val loginRequest = LoginRequest(
-                etEmail.text.toString(), etPassword.text.toString()
+                edLoginEmail.text.toString(), edLoginPassword.text.toString()
             )
 
             authViewModel.login(loginRequest).observe(viewLifecycleOwner) {
@@ -61,7 +65,8 @@ class LoginFragment : Fragment() {
                     StatusResponse.SUCCESS -> {
                         it.body?.apply {
                             toast(requireActivity(), message)
-                            saveToken(loginResult.token)
+                            prefs.set(USER_TOKEN, loginResult.token)
+                            prefs.set(USER_NAME, loginResult.name)
                             intentToMain()
                         }
                     }
@@ -72,13 +77,6 @@ class LoginFragment : Fragment() {
                 isLoading(false)
             }
         }
-    }
-
-    private fun saveToken(token: String) {
-        val sharedPref =
-            requireActivity().getSharedPreferences(Constant.USER_DATA, Context.MODE_PRIVATE)
-                ?: return
-        sharedPref.edit().putString(Constant.TOKEN, token).apply()
     }
 
     private fun intentToMain() {
@@ -93,11 +91,11 @@ class LoginFragment : Fragment() {
             if (loading) {
                 btnLogin.text = ""
                 btnLogin.isEnabled = false
-                progressBar.visibility = View.VISIBLE
+                progressBar.visible()
             } else {
                 btnLogin.text = getString(R.string.login)
                 btnLogin.isEnabled = true
-                progressBar.visibility = View.GONE
+                progressBar.gone()
             }
         }
     }
