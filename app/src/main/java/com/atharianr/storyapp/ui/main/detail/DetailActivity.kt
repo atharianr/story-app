@@ -1,18 +1,14 @@
 package com.atharianr.storyapp.ui.main.detail
 
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.atharianr.storyapp.MyApplication
 import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse
 import com.atharianr.storyapp.databinding.ActivityDetailBinding
 import com.atharianr.storyapp.ui.main.MainViewModel
-import com.atharianr.storyapp.utils.Constant
+import com.atharianr.storyapp.utils.*
 import com.atharianr.storyapp.utils.Constant.STORY_ID
 import com.atharianr.storyapp.utils.PreferenceHelper.get
-import com.atharianr.storyapp.utils.getDateFromString
-import com.atharianr.storyapp.utils.toStringFormat
-import com.atharianr.storyapp.utils.toast
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,6 +28,7 @@ class DetailActivity : AppCompatActivity() {
             ibBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         }
 
+        isLoading(true)
         getStoryDetail(intent.getStringExtra(STORY_ID) ?: "")
     }
 
@@ -56,10 +53,33 @@ class DetailActivity : AppCompatActivity() {
                             tvItemDesc.text = description
                         }
                     }
+                    showError(false)
                 }
                 StatusResponse.ERROR -> {
                     it.message?.let { msg -> toast(this, msg) }
+                    showError(true)
                 }
+            }
+            isLoading(false)
+        }
+    }
+
+    private fun isLoading(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                progressBar.visible()
+            } else {
+                progressBar.gone()
+            }
+        }
+    }
+
+    private fun showError(error: Boolean) {
+        binding.apply {
+            if (error) {
+                llError.visible()
+            } else {
+                llError.gone()
             }
         }
     }

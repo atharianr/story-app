@@ -18,7 +18,9 @@ import com.atharianr.storyapp.utils.Constant.USER_NAME
 import com.atharianr.storyapp.utils.Constant.USER_TOKEN
 import com.atharianr.storyapp.utils.PreferenceHelper.clearSession
 import com.atharianr.storyapp.utils.PreferenceHelper.get
+import com.atharianr.storyapp.utils.gone
 import com.atharianr.storyapp.utils.toast
+import com.atharianr.storyapp.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -36,10 +38,10 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        storyAdapter = StoryAdapter { id ->
+        storyAdapter = StoryAdapter { id, optionCompat ->
             startActivity(Intent(this, DetailActivity::class.java).apply {
                 putExtra(STORY_ID, id)
-            })
+            }, optionCompat.toBundle())
         }
 
         with(binding) {
@@ -54,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             ibLogout.setOnClickListener { logout() }
         }
 
+        isLoading(true)
         setupRecyclerView()
         getAllStories()
     }
@@ -75,11 +78,14 @@ class MainActivity : AppCompatActivity() {
                     it.body?.apply {
                         storyAdapter.setData(this.listStory)
                     }
+                    showError(false)
                 }
                 StatusResponse.ERROR -> {
                     it.message?.let { msg -> toast(this, msg) }
+                    showError(true)
                 }
             }
+            isLoading(false)
         }
     }
 
@@ -94,6 +100,28 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             setHasFixedSize(true)
             adapter = storyAdapter
+        }
+    }
+
+    private fun isLoading(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                progressBar.visible()
+                llError.gone()
+            } else {
+                rvStory.visible()
+                progressBar.gone()
+            }
+        }
+    }
+
+    private fun showError(error: Boolean) {
+        binding.apply {
+            if (error) {
+                llError.visible()
+            } else {
+                llError.gone()
+            }
         }
     }
 }

@@ -1,7 +1,10 @@
 package com.atharianr.storyapp.ui.adapter
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.atharianr.storyapp.data.source.remote.response.Story
 import com.atharianr.storyapp.databinding.ItemsStoryBinding
@@ -9,7 +12,7 @@ import com.atharianr.storyapp.utils.getDateFromString
 import com.atharianr.storyapp.utils.toStringFormat
 import com.bumptech.glide.Glide
 
-class StoryAdapter(private val callback: (String) -> Unit) :
+class StoryAdapter(private val callback: (String, ActivityOptionsCompat) -> Unit) :
     RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
 
     private var listData = ArrayList<Story>()
@@ -45,7 +48,16 @@ class StoryAdapter(private val callback: (String) -> Unit) :
                 tvItemDesc.text = data.description
 
                 root.setOnClickListener {
-                    callback.invoke(data.id)
+                    val optionsCompat: ActivityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            itemView.context as Activity,
+                            Pair(cvItemPhoto, "cv_photo"),
+                            Pair(tvItemName, "name"),
+                            Pair(tvCreatedAt, "date"),
+                            Pair(tvItemDesc, "desc")
+                        )
+
+                    callback.invoke(data.id, optionsCompat)
                 }
             }
         }

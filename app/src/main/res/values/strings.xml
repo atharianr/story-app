@@ -1,24 +1,25 @@
 <resources>
-    <string name="app_name">Story App</string>
+    <string name="app_name" translatable="false">Story App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="login">Masuk</string>
-    <string name="hint">hint</string>
-    <string name="asking_account">Belum punya akun? Daftar</string>
-    <string name="asking_login">Sudah punya akun? Masuk</string>
-    <string name="register">Daftar</string>
-    <string name="password_error_info">Kata sandi minimal 6 karakter</string>
-    <string name="email_error_info">Email tidak sesuai</string>
-    <string name="user_name">Nama Pengguna</string>
+    <string name="login">Login</string>
+    <string name="hint" translatable="false">hint</string>
+    <string name="asking_account">Don\'t have account? Register</string>
+    <string name="asking_login">Already have account? Login</string>
+    <string name="register">Register</string>
+    <string name="password_error_info">Password atleast 6 chars</string>
+    <string name="email_error_info">Email not valid</string>
+    <string name="user_name">User Name</string>
     <string name="email">Email</string>
-    <string name="password">Kata Sandi</string>
-    <string name="date">Tanggal</string>
-    <string name="description">Deskripsi</string>
-    <string name="greeting">Halo, &#160;</string>
-    <string name="story_detail">Detail Story</string>
-    <string name="add_story">Tambah Story</string>
-    <string name="camera">Kamera</string>
-    <string name="gallery">Galeri</string>
-    <string name="description_hint">Masukkan deskripsi story</string>
-    <string name="upload">Unggah</string>
+    <string name="password">Password</string>
+    <string name="date">Date</string>
+    <string name="description">Description</string>
+    <string name="greeting">Hello, &#160;</string>
+    <string name="story_detail">Story Detail</string>
+    <string name="add_story">Add Story</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description_hint">Add story description</string>
+    <string name="upload">Upload</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
