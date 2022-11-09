@@ -3,7 +3,7 @@ package com.atharianr.storyapp
 import android.app.Application
 import android.content.SharedPreferences
 import com.atharianr.storyapp.di.networkModule
-import com.atharianr.storyapp.di.remoteDataSourceModule
+import com.atharianr.storyapp.di.repositoryModule
 import com.atharianr.storyapp.di.viewModelModule
 import com.atharianr.storyapp.utils.PreferenceHelper
 import org.koin.android.ext.koin.androidContext
@@ -22,7 +22,7 @@ class MyApplication : Application() {
             modules(
                 listOf(
                     networkModule,
-                    remoteDataSourceModule,
+                    repositoryModule,
                     viewModelModule
                 )
             )

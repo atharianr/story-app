@@ -1,11 +1,9 @@
 package com.atharianr.storyapp.data.source.remote.network
 
+import com.atharianr.storyapp.data.source.local.entity.StoryEntity
 import com.atharianr.storyapp.data.source.remote.request.LoginRequest
 import com.atharianr.storyapp.data.source.remote.request.RegisterRequest
-import com.atharianr.storyapp.data.source.remote.response.AddStoryResponse
-import com.atharianr.storyapp.data.source.remote.response.AuthResponse
-import com.atharianr.storyapp.data.source.remote.response.StoriesResponse
-import com.atharianr.storyapp.data.source.remote.response.StoryDetailResponse
+import com.atharianr.storyapp.data.source.remote.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -19,7 +17,16 @@ interface ApiService {
     fun login(@Body loginRequest: LoginRequest): Call<AuthResponse>
 
     @GET("stories")
-    fun getAllStories(@Header("Authorization") bearerToken: String): Call<StoriesResponse>
+    fun getAllStories(
+        @Header("Authorization") bearerToken: String, @Query("location") location: Int
+    ): Call<StoriesResponse>
+
+    @GET("stories")
+    suspend fun getAllStoriesPaging(
+        @Header("Authorization") bearerToken: String,
+        @Query("location") location: Int,
+        @Query("page") page: Int
+    ): StoriesResponse
 
     @GET("stories/{id}")
     fun getStoryDetail(

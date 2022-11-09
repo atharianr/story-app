@@ -22,4 +22,7 @@
     <string name="description_hint">Add story description</string>
     <string name="upload">Upload</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="back">Kembali</string>
+    <string name="retry">Ulangi</string>
 </resources>

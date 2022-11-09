@@ -1,12 +1,15 @@
 package com.atharianr.storyapp.di
 
-import com.atharianr.storyapp.data.source.remote.RemoteDataSource
+import com.atharianr.storyapp.data.repository.StoryRepository
+import com.atharianr.storyapp.data.source.local.database.StoryDatabase
+import com.atharianr.storyapp.data.repository.AuthRepository
 import com.atharianr.storyapp.data.source.remote.network.ApiService
 import com.atharianr.storyapp.ui.auth.AuthViewModel
 import com.atharianr.storyapp.ui.main.MainViewModel
 import com.atharianr.storyapp.utils.Constant.API_BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -30,11 +33,17 @@ val networkModule = module {
             .build()
         retrofit.create(ApiService::class.java)
     }
+
+    single {
+        StoryDatabase.getDatabase(androidContext())
+    }
 }
 
-val remoteDataSourceModule = module {
-    factory { RemoteDataSource(get()) }
+val repositoryModule = module {
+    factory { AuthRepository(get()) }
+    factory { StoryRepository(get(), get()) }
 }
+
 val viewModelModule = module {
     viewModel { AuthViewModel(get()) }
     viewModel { MainViewModel(get()) }

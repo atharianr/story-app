@@ -22,6 +22,7 @@
                 android:id="@+id/tv_greetings"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -29,6 +30,18 @@
                 android:textColor="@color/blue_2B95F6"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/ib_maps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:minWidth="32dp"
+                android:minHeight="48dp"
+                android:src="@drawable/ic_baseline_map_24"
+                app:tint="@color/blue_2B95F6"
+                tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:id="@+id/ib_logout"
