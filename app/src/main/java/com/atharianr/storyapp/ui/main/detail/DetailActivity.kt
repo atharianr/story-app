@@ -28,7 +28,6 @@ class DetailActivity : AppCompatActivity() {
             ibBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         }
 
-        isLoading(true)
         getStoryDetail(intent.getStringExtra(STORY_ID) ?: "")
     }
 
@@ -53,14 +52,19 @@ class DetailActivity : AppCompatActivity() {
                             tvItemDesc.text = description
                         }
                     }
+                    isLoading(false)
+                    showError(false)
+                }
+                StatusResponse.LOADING -> {
+                    isLoading(true)
                     showError(false)
                 }
                 StatusResponse.ERROR -> {
                     it.message?.let { msg -> toast(this, msg) }
+                    isLoading(false)
                     showError(true)
                 }
             }
-            isLoading(false)
         }
     }
 
@@ -78,8 +82,10 @@ class DetailActivity : AppCompatActivity() {
         binding.apply {
             if (error) {
                 llError.visible()
+                llContent.gone()
             } else {
                 llError.gone()
+                llContent.visible()
             }
         }
     }

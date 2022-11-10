@@ -1,71 +1,41 @@
 package com.atharianr.storyapp.data.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import com.atharianr.storyapp.data.source.remote.network.ApiService
 import com.atharianr.storyapp.data.source.remote.request.LoginRequest
 import com.atharianr.storyapp.data.source.remote.request.RegisterRequest
 import com.atharianr.storyapp.data.source.remote.response.AuthResponse
 import com.atharianr.storyapp.data.source.remote.response.vo.ApiResponse
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class AuthRepository(private val apiService: ApiService) {
-    fun register(registerRequest: RegisterRequest): LiveData<ApiResponse<AuthResponse>> {
-        val resultResponse = MutableLiveData<ApiResponse<AuthResponse>>()
-
-        apiService.register(registerRequest).enqueue(object : Callback<AuthResponse> {
-            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
-                if (response.isSuccessful) {
-                    resultResponse.postValue(ApiResponse.success(response.body()))
-                } else {
-                    try {
-                        val errorBody = response.errorBody()
-                        if (errorBody != null) {
-                            val jObjError = JSONObject(errorBody.string())
-                            resultResponse.postValue(ApiResponse.error(jObjError.getString("message")))
-                        }
-                    } catch (e: Exception) {
-                        resultResponse.postValue(ApiResponse.error(e.message))
-                    }
-                }
+    fun register(registerRequest: RegisterRequest): LiveData<ApiResponse<AuthResponse>> = liveData {
+        emit(ApiResponse.loading())
+        try {
+            val response = apiService.register(registerRequest)
+            if (!response.error) {
+                emit(ApiResponse.success(response))
+            } else {
+                emit(ApiResponse.error(response.message))
             }
-
-            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                resultResponse.postValue(ApiResponse.error(t.message))
-            }
-        })
-
-        return resultResponse
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ApiResponse.error(e.message))
+        }
     }
 
-    fun login(loginRequest: LoginRequest): LiveData<ApiResponse<AuthResponse>> {
-        val resultResponse = MutableLiveData<ApiResponse<AuthResponse>>()
-
-        apiService.login(loginRequest).enqueue(object : Callback<AuthResponse> {
-            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
-                if (response.isSuccessful) {
-                    resultResponse.postValue(ApiResponse.success(response.body()))
-                } else {
-                    try {
-                        val errorBody = response.errorBody()
-                        if (errorBody != null) {
-                            val jObjError = JSONObject(errorBody.string())
-                            resultResponse.postValue(ApiResponse.error(jObjError.getString("message")))
-                        }
-                    } catch (e: Exception) {
-                        resultResponse.postValue(ApiResponse.error(e.message))
-                    }
-                }
+    fun login(loginRequest: LoginRequest): LiveData<ApiResponse<AuthResponse>> = liveData {
+        emit(ApiResponse.loading())
+        try {
+            val response = apiService.login(loginRequest)
+            if (!response.error) {
+                emit(ApiResponse.success(response))
+            } else {
+                emit(ApiResponse.error(response.message))
             }
-
-            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                resultResponse.postValue(ApiResponse.error(t.message))
-            }
-        })
-
-        return resultResponse
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ApiResponse.error(e.message))
+        }
     }
 }

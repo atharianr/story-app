@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atharianr.storyapp.MyApplication.Companion.prefs
 import com.atharianr.storyapp.R
+import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse
 import com.atharianr.storyapp.databinding.ActivityMainBinding
 import com.atharianr.storyapp.ui.adapter.LoadingStateAdapter
 import com.atharianr.storyapp.ui.adapter.StoryPagingAdapter
@@ -19,7 +22,12 @@ import com.atharianr.storyapp.utils.Constant.USER_NAME
 import com.atharianr.storyapp.utils.PreferenceHelper.clearSession
 import com.atharianr.storyapp.utils.PreferenceHelper.get
 import com.atharianr.storyapp.utils.gone
+import com.atharianr.storyapp.utils.toast
 import com.atharianr.storyapp.utils.visible
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -72,8 +80,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAllStoriesPaging() {
-        mainViewModel.story.observe(this) {
+        mainViewModel.getAllStoriesPaging().observe(this) {
             storyPagingAdapter.submitData(lifecycle, it)
+            if (storyPagingAdapter.itemCount > 0) {
+                showError(false)
+            } else {
+                showError(true)
+            }
             isLoading(false)
         }
     }
@@ -99,8 +112,8 @@ class MainActivity : AppCompatActivity() {
     private fun isLoading(loading: Boolean) {
         binding.apply {
             if (loading) {
+                rvStory.gone()
                 progressBar.visible()
-                llError.gone()
             } else {
                 rvStory.visible()
                 progressBar.gone()
@@ -112,8 +125,10 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             if (error) {
                 llError.visible()
+                rvStory.gone()
             } else {
                 llError.gone()
+                rvStory.visible()
             }
         }
     }

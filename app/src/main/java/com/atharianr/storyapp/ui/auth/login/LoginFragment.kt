@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import com.atharianr.storyapp.MyApplication.Companion.prefs
 import com.atharianr.storyapp.R
 import com.atharianr.storyapp.data.source.remote.request.LoginRequest
-import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse
+import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.*
 import com.atharianr.storyapp.databinding.FragmentLoginBinding
 import com.atharianr.storyapp.ui.auth.AuthViewModel
 import com.atharianr.storyapp.ui.main.MainActivity
@@ -53,8 +53,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun login() {
-        isLoading(true)
-
         with(binding) {
             val loginRequest = LoginRequest(
                 edLoginEmail.text.toString(), edLoginPassword.text.toString()
@@ -62,19 +60,23 @@ class LoginFragment : Fragment() {
 
             authViewModel.login(loginRequest).observe(viewLifecycleOwner) {
                 when (it.status) {
-                    StatusResponse.SUCCESS -> {
+                    SUCCESS -> {
                         it.body?.apply {
                             toast(requireActivity(), message)
                             prefs.set(USER_TOKEN, loginResult.token)
                             prefs.set(USER_NAME, loginResult.name)
                             intentToMain()
                         }
+                        isLoading(false)
                     }
-                    StatusResponse.ERROR -> {
+                    LOADING -> {
+                        isLoading(true)
+                    }
+                    ERROR -> {
                         it.message?.let { msg -> toast(requireActivity(), msg) }
+                        isLoading(false)
                     }
                 }
-                isLoading(false)
             }
         }
     }

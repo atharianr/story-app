@@ -1,130 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".ui.main.detail.DetailActivity">
 
     <RelativeLayout
+        android:id="@+id/rv_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="?android:attr/actionBarSize"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:id="@+id/ll_content"
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:minWidth="32dp"
+            android:minHeight="32dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            app:tint="@color/blue_2B95F6"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/story_detail"
+            android:textColor="@color/blue_2B95F6"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:layout_below="@id/rv_top_bar">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:padding="16dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="24dp">
 
-                <ImageButton
-                    android:id="@+id/ib_back"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:transitionName="cv_photo"
+                    app:cardCornerRadius="12dp">
+
+                    <ImageView
+                        android:id="@+id/iv_item_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:src="@color/grey_979797"
+                        android:transitionName="photo"
+                        tools:ignore="ContentDescription" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/user_name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:transitionName="name" />
+
+                <TextView
+                    android:id="@+id/tv_created_at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:text="@string/date"
+                    android:textColor="@color/grey_979797"
+                    android:textSize="12sp"
+                    android:transitionName="date" />
+
+                <TextView
+                    android:id="@+id/tv_item_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:transitionName="desc" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:minWidth="32dp"
-                    android:minHeight="32dp"
-                    android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-                    app:tint="@color/blue_2B95F6"
+                    android:src="@drawable/ic_baseline_mood_bad_24"
+                    app:tint="@android:color/darker_gray"
                     tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/story_detail"
-                    android:textColor="@color/blue_2B95F6"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                    android:text="@string/something_went_wrong"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:transitionName="cv_photo"
-                app:cardCornerRadius="12dp">
-
-                <ImageView
-                    android:id="@+id/iv_item_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:src="@color/grey_979797"
-                    android:transitionName="photo"
-                    tools:ignore="ContentDescription" />
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tv_item_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/user_name"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:transitionName="name" />
-
-            <TextView
-                android:id="@+id/tv_created_at"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:text="@string/date"
-                android:textColor="@color/grey_979797"
-                android:textSize="12sp"
-                android:transitionName="date" />
-
-            <TextView
-                android:id="@+id/tv_item_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/description"
-                android:textColor="@color/black"
-                android:transitionName="desc" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_error"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
+            <ProgressBar
+                android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_mood_bad_24"
-                app:tint="@android:color/darker_gray"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/something_went_wrong"
-                android:textColor="@android:color/darker_gray" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-    </RelativeLayout>
-</androidx.core.widget.NestedScrollView>
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

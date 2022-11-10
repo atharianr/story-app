@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.atharianr.storyapp.R
 import com.atharianr.storyapp.data.source.remote.request.RegisterRequest
-import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.ERROR
-import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.SUCCESS
+import com.atharianr.storyapp.data.source.remote.response.vo.StatusResponse.*
 import com.atharianr.storyapp.databinding.FragmentRegisterBinding
 import com.atharianr.storyapp.ui.auth.AuthActivity
 import com.atharianr.storyapp.ui.auth.AuthViewModel
@@ -52,8 +51,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun register() {
-        isLoading(true)
-
         with(binding) {
             val registerRequest = RegisterRequest(
                 edRegisterName.text.toString(),
@@ -66,12 +63,16 @@ class RegisterFragment : Fragment() {
                     SUCCESS -> {
                         it.body?.message?.let { msg -> toast(requireActivity(), msg) }
                         intentToAuth()
+                        isLoading(false)
+                    }
+                    LOADING -> {
+                        isLoading(true)
                     }
                     ERROR -> {
                         it.message?.let { msg -> toast(requireActivity(), msg) }
+                        isLoading(false)
                     }
                 }
-                isLoading(false)
             }
         }
     }

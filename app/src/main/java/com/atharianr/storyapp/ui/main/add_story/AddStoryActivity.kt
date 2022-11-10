@@ -50,7 +50,6 @@ class AddStoryActivity : AppCompatActivity() {
             btnCamera.setOnClickListener { startCameraX() }
             btnGallery.setOnClickListener { startGallery() }
             btnUpload.setOnClickListener {
-                isLoading(true)
                 addNewStory()
             }
         }
@@ -99,12 +98,16 @@ class AddStoryActivity : AppCompatActivity() {
                                     toast(this@AddStoryActivity, message)
                                     finish()
                                 }
+                                isLoading(false)
+                            }
+                            StatusResponse.LOADING -> {
+                                isLoading(true)
                             }
                             StatusResponse.ERROR -> {
                                 it.message?.let { msg -> toast(this@AddStoryActivity, msg) }
+                                isLoading(false)
                             }
                         }
-                        isLoading(false)
                     }
             } else {
                 Toast.makeText(
