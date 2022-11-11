@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAllStoriesPaging() {
-        mainViewModel.getAllStoriesPaging().observe(this) {
+        mainViewModel.getAllStoriesPaging().cachedIn(mainViewModel).observe(this) {
             storyPagingAdapter.submitData(lifecycle, it)
             if (storyPagingAdapter.itemCount > 0) {
                 showError(false)

@@ -17,5 +17,5 @@ class MainViewModel(private val storyRepository: StoryRepository) : ViewModel() 
     fun addNewStory(bearerToken: String, image: MultipartBody.Part, desc: RequestBody) =
         storyRepository.addNewStory(bearerToken, image, desc)
 
-    fun getAllStoriesPaging() = storyRepository.getAllStoriesPaging().cachedIn(viewModelScope)
+    fun getAllStoriesPaging() = storyRepository.getAllStoriesPaging()
 }

@@ -1,0 +1,57 @@
+AuthViewModel
+1. login()
+Test ketika berhasil:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse SUCCESS.
+- Memastikan data sesuai dengan yang diharapkan.
+Test ketika gagal:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse ERROR.
+
+2. register()
+- Memastikan data tidak null.
+- Memastikan hasil tidak error.
+- Memastikan data sesuai dengan yang diharapkan.
+Test ketika gagal:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse ERROR.
+
+MainViewModel
+1. getAllStories()
+Test ketika berhasil:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse SUCCESS.
+- Memastikan jumlah data sesuai dengan yang diharapkan.
+Test ketika gagal:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse ERROR.
+
+2. getDetailStory()
+Test ketika berhasil:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse SUCCESS.
+- Memastikan jumlah data sesuai dengan yang diharapkan.
+Test ketika gagal:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse ERROR.
+
+3. addNewStory()
+Test ketika berhasil:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse SUCCESS.
+Test ketika gagal:
+- Memastikan data tidak null.
+- Memastikan hasil mengembalikan ApiResponse ERROR.
+
+4. getAllStoriesPaging()
+Test ketika berhasil:
+- Memastikan data paging tidak null.
+- Memastikan jumlah data sesuai dengan yang diharapkan.
+
+
+
+
+
+
+
+
